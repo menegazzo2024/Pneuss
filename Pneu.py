@@ -3,8 +3,6 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
-import warnings
-warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 # ======================================
 # CONFIGURAÇÃO DA PÁGINA
@@ -83,7 +81,6 @@ df = pd.DataFrame()
 # Se o arquivo for carregado, executa o processamento
 if uploaded_file is not None:
     df = load_data(uploaded_file)
-    st.session_state['df'] = df
 
     # Conversão para float nos sulcos
     sulco_cols = [
