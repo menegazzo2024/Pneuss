@@ -1,17 +1,14 @@
 import streamlit as st
-import sweetviz as sv
-import pandas as pd
+from dataprep.eda import create_report
 from streamlit.components.v1 import html
 
-# carrega DataFrame em st.session_state['df']
-df = st.session_state.get('df')
+st.set_page_config(page_title="Resumo EDA", layout="wide")
+
+df = st.session_state.get("df")
 if df is None:
-    st.warning("Faça upload na página anterior.")
-else:
-    df["PRESSÃO"] = pd.to_numeric(df["PRESSÃO"], errors="coerce")
-    report = sv.analyze(df)
-    report_path = "sweetviz_report.html"
-    report.show_html(report_path, open_browser=False)
-    # injeta o HTML gerado na app
-    with open(report_path, "r", encoding="utf-8") as f:
-        html(f.read(), height=800, scrolling=True)
+    st.warning("Faça upload do DataFrame na página de upload.")
+    st.stop()
+
+report = create_report(df)
+report_html = report.to_html()
+html(report_html, height=800, scrolling=True)
