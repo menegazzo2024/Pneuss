@@ -1,6 +1,6 @@
 import streamlit as st
-from dataprep.eda import create_report
-from streamlit.components.v1 import html
+from ydata_profiling import ProfileReport
+from streamlit_pandas_profiling import st_profile_report
 
 st.set_page_config(page_title="Resumo EDA", layout="wide")
 
@@ -9,6 +9,5 @@ if df is None:
     st.warning("Faça upload do DataFrame na página de upload.")
     st.stop()
 
-report = create_report(df)
-report_html = report.to_html()
-html(report_html, height=800, scrolling=True)
+profile = ProfileReport(df, title="Relatório de Perfil", explorative=True)
+st_profile_report(profile)
